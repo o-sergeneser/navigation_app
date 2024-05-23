@@ -45,7 +45,7 @@ To get started with this project, follow these steps:
 
 ## Documentation
 
-For detailed instructions and explanations, check out the article on Medium: ["An Efficient Navigation App in Flutter with Google Maps and Routes APIs"]([https://medium.com/benim-makalem](https://medium.com/@oguzhansergeneser/building-an-efficient-navigation-app-in-flutter-with-google-maps-and-routes-apis-bfb7bf49f1cf))
+For detailed instructions and explanations, check out the article on Medium: ["An Efficient Navigation App in Flutter with Google Maps and Routes APIs"](https://medium.com/@oguzhansergeneser/building-an-efficient-navigation-app-in-flutter-with-google-maps-and-routes-apis-bfb7bf49f1cf)
 
 ## Emulator Setup
 
