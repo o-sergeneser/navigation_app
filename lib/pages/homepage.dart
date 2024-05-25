@@ -10,7 +10,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_routes/google_maps_routes.dart';
 import 'package:maps_toolkit/maps_toolkit.dart' as mtk;
 import 'package:my_simple_navigation/constants/constants.dart';
-import 'package:my_simple_navigation/utils/permission_provider.dart';
+import 'package:my_simple_navigation/services/permission_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class MyHomePage extends StatefulWidget {
