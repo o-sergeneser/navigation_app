@@ -80,7 +80,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         title: Text("My Simple Navigation",
             style: TextStyle(color: Colors.grey[300])),
       ),
-      body: PermissionProvider.locationPermission != PermissionStatus.granted ||
+      body: !PermissionProvider.isServiceOn ||
+              PermissionProvider.locationPermission !=
+                  PermissionStatus.granted ||
               _darkMapStyle.isEmpty
           ? Container(
               color: Colors.grey[700],
@@ -91,7 +93,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               initialCameraPosition: _cameraPos,
               markers: Set<Marker>.from(markerList),
               onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
+                if (!_controller.isCompleted) {
+                _controller.complete(controller);}
               },
             ),
     );
@@ -156,7 +159,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed) {
       if (PermissionProvider.permissionDialogRoute != null &&
           PermissionProvider.permissionDialogRoute!.isActive) {
-        Navigator.of(context)
+        Navigator.of(Constants.globalNavigatorKey.currentContext!)
             .removeRoute(PermissionProvider.permissionDialogRoute!);
       }
       Future.delayed(Duration(milliseconds: 250), () async {
@@ -170,8 +173,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   void checkPermissionAndListenLocation() {
-    PermissionProvider.handleLocationPermission(context).then((_) {
+    PermissionProvider.handleLocationPermission().then((_) {
       if (_positionStream == null &&
+          PermissionProvider.isServiceOn &&
           PermissionProvider.locationPermission == PermissionStatus.granted) {
         startListeningLocation();
       }

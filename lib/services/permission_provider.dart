@@ -8,9 +8,10 @@ import 'package:permission_handler/permission_handler.dart';
 class PermissionProvider {
   static PermissionStatus locationPermission = PermissionStatus.denied;
   static DialogRoute? permissionDialogRoute;
+  static bool isServiceOn = false;
 
-  static Future<void> handleLocationPermission(BuildContext context) async {
-    bool isServiceOn = await Permission.location.serviceStatus.isEnabled;
+  static Future<void> handleLocationPermission() async {
+    isServiceOn = await Permission.location.serviceStatus.isEnabled;
     locationPermission = await Permission.location.status;
     if (isServiceOn) {
       switch (locationPermission) {
@@ -21,7 +22,8 @@ class PermissionProvider {
                   "To use navigation, please allow location usage in settings.",
               buttonText: "Go To Settings",
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(Constants.globalNavigatorKey.currentContext!)
+                    .removeRoute(PermissionProvider.permissionDialogRoute!);
                 openAppSettings();
               });
           Navigator.of(Constants.globalNavigatorKey.currentContext!)
@@ -39,7 +41,8 @@ class PermissionProvider {
           text: "To use navigation, please turn location service on.",
           buttonText: Platform.isAndroid ? "Turn It On" : "Ok",
           onPressed: () {
-            Navigator.of(Constants.globalNavigatorKey.currentContext!).pop();
+            Navigator.of(Constants.globalNavigatorKey.currentContext!)
+                .removeRoute(PermissionProvider.permissionDialogRoute!);
             if (Platform.isAndroid) {
               const AndroidIntent intent =
                   AndroidIntent(action: Constants.androidLocationIntentAddress);
@@ -48,7 +51,8 @@ class PermissionProvider {
               // TODO: ios integration
             }
           });
-      Navigator.of(Constants.globalNavigatorKey.currentContext!).push(permissionDialogRoute!);
+      Navigator.of(Constants.globalNavigatorKey.currentContext!)
+          .push(permissionDialogRoute!);
     }
   }
 }
